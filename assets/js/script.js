@@ -10,7 +10,7 @@
 
 const cityInput = document.getElementById("cityName");
 const submit = document.getElementById("submit")
-
+const history = JSON.parse(localStorage.getItem('cities')) || [];
 var APIKey = "ba06f8ea794c64bd0332bf89734b3bc9";
 
 
@@ -28,6 +28,8 @@ fetch(queryURL)
   .then(function (data) {
     //console.log(data);
     //console.log(data.main.temp)
+    history.push(city);
+    localStorage.setItem('cities', JSON.stringify(history));
     tempEl.textContent = data.main.temp + " °C"
     forecast(data)
   });
@@ -38,15 +40,19 @@ fetch(queryURL)
 function forecast(dataReceived) {
   const lat = dataReceived.coord.lat
   const lon = dataReceived.coord.lon
-    var urlCoord = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey;
+    var urlCoord = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey;
  fetch(urlCoord)
  .then(function(response){
   return response.json();
  })  
   .then(function(data) {
-    console.log(data)
+    console.log(data, "inside the forecast function")
+    for (let i =0; i<data.list.length; i=i+8) {
+      console.log(data.list[i])
+    }
 
-  })
-    
-    
+  })   
 }
+
+
+localStorage.setItem('name', 'michell');
