@@ -45,7 +45,7 @@ const forecastEl = document.getElementById("forecast-box")
 function forecast(dataReceived) {
   const lat = dataReceived.coord.lat
   const lon = dataReceived.coord.lon
-    var urlCoord = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey;
+    var urlCoord = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + APIKey;
  fetch(urlCoord)
  .then(function(response){
   return response.json();
@@ -53,10 +53,18 @@ function forecast(dataReceived) {
   .then(function(data) {
     console.log(data, "inside the forecast function")
     for (let i =0; i<data.list.length; i=i+8) {
+      const cardEl = document.createElement("div");
+      cardEl.setAttribute("class", "test")
+      const dateEl = document.createElement("li")
+      dateEl.textContent = data.list[i].dt_txt.substr(0, 10);
+      cardEl.appendChild(dateEl);
       const iconEl = document.createElement("img")
       iconEl.src = `https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`
-      forecastEl.appendChild(iconEl)
-      console.log(data.list[i].weather[0].icon)
+      cardEl.appendChild(iconEl);
+      const tempEl = document.createElement("li")
+      tempEl.textContent = data.list[i].main.temp;
+      cardEl.appendChild(tempEl);
+      forecastEl.appendChild(cardEl);
     }
 
   })   
