@@ -16,9 +16,11 @@ var APIKey = "ba06f8ea794c64bd0332bf89734b3bc9";
 
 submit.addEventListener("click", getWeather);
 
-function getWeather() {
+function getWeather(event) {
+  event.preventDefault();
   var city= cityInput.value;
 const tempEl = document.getElementById("temperature")
+const iconEl = document.getElementById("icon")
 var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=metric";
 
 fetch(queryURL)
@@ -26,16 +28,19 @@ fetch(queryURL)
     return response.json();
   })
   .then(function (data) {
-    //console.log(data);
+    console.log(data);
     //console.log(data.main.temp)
     history.push(city);
     localStorage.setItem('cities', JSON.stringify(history));
     tempEl.textContent = data.main.temp + " °C"
+    iconEl.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+    console.log(data.weather[0].icon)
     forecast(data)
   });
 }
 
 //getWeather()
+const forecastEl = document.getElementById("forecast-box")
 
 function forecast(dataReceived) {
   const lat = dataReceived.coord.lat
@@ -48,11 +53,12 @@ function forecast(dataReceived) {
   .then(function(data) {
     console.log(data, "inside the forecast function")
     for (let i =0; i<data.list.length; i=i+8) {
-      console.log(data.list[i])
+      const iconEl = document.createElement("img")
+      iconEl.src = `https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`
+      forecastEl.appendChild(iconEl)
+      console.log(data.list[i].weather[0].icon)
     }
 
   })   
 }
 
-
-localStorage.setItem('name', 'michell');
