@@ -19,8 +19,11 @@ submit.addEventListener("click", getWeather);
 function getWeather(event) {
   event.preventDefault();
   var city= cityInput.value;
-const tempEl = document.getElementById("temperature")
-const iconEl = document.getElementById("icon")
+const cityEl = document.getElementById("city");
+const tempEl = document.getElementById("temperature");
+const iconEl = document.getElementById("icon");
+const humidityEl = document.getElementById("humidity");
+const windEl = document.getElementById("wind");
 var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=metric";
 
 fetch(queryURL)
@@ -32,10 +35,12 @@ fetch(queryURL)
     //console.log(data.main.temp)
     history.push(city);
     localStorage.setItem('cities', JSON.stringify(history));
-    tempEl.textContent = data.main.temp + " °C"
-    iconEl.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
-    console.log(data.weather[0].icon)
-    forecast(data)
+    tempEl.textContent = data.main.temp + " °C";
+    iconEl.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    cityEl.textContent = data.name;
+    humidityEl.textContent = "Humidity " + data.main.humidity + "%";
+    windEl.textContent = "Wind speed: " + data.wind.speed + " meter/sec";
+    forecast(data);
   });
 }
 
@@ -62,8 +67,14 @@ function forecast(dataReceived) {
       iconEl.src = `https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`
       cardEl.appendChild(iconEl);
       const tempEl = document.createElement("li")
-      tempEl.textContent = data.list[i].main.temp;
+      tempEl.textContent = data.list[i].main.temp + " °C";
       cardEl.appendChild(tempEl);
+      const humidityEl = document.createElement("li");
+      humidityEl.textContent = "Humidity: " + data.list[i].main.humidity + "%";
+      cardEl.appendChild(humidityEl);
+      const windEl = document.createElement("li");
+      windEl.textContent = "Wind speed: " + data.list[i].wind.speed + " meter/sec";
+      cardEl.appendChild(windEl);
       forecastEl.appendChild(cardEl);
     }
 
