@@ -8,23 +8,56 @@
 //WHEN I click on a city in the search history
 //THEN I am again presented with current and future conditions for that city
 
+
+
+
 const cityInput = document.getElementById("cityName");
 const submit = document.getElementById("submit")
 const history = JSON.parse(localStorage.getItem('cities')) || [];
+const cities = document.getElementById("cities-box")
 var APIKey = "ba06f8ea794c64bd0332bf89734b3bc9";
 
+function getCities() {
+  const storedCities = JSON.parse(localStorage.getItem('cities')) || []
+  for (let i = 0; i < storedCities.length; i++) {
+    console.log(storedCities[i])
+    const getCitiesEl = document.createElement("div");
+    getCitiesEl.textContent = storedCities[i];
+    cities.appendChild(getCitiesEl);
+  }
+}
+getCities();
 
-submit.addEventListener("click", getWeather);
+function buttonClick() {
+  getWeather("Seattle");
+}
+cities.addEventListener("click", buttonClick)
 
-function getWeather(event) {
+function stars(event){
   event.preventDefault();
-  var city= cityInput.value;
+  getWeather();
+}
+
+submit.addEventListener("click", stars);
+
+function getWeather(cityHistory) {
+  if (cityHistory) {
+    city = cityHistory
+  } else {
+    var city= cityInput.value;
+  }
+
 const cityEl = document.getElementById("city");
+const dateEl = document.getElementById("date");
 const tempEl = document.getElementById("temperature");
 const iconEl = document.getElementById("icon");
 const humidityEl = document.getElementById("humidity");
 const windEl = document.getElementById("wind");
+
+
 var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=metric";
+
+
 
 fetch(queryURL)
 .then(function (response) {
@@ -32,9 +65,9 @@ fetch(queryURL)
   })
   .then(function (data) {
     console.log(data);
-    //console.log(data.main.temp)
     history.push(city);
     localStorage.setItem('cities', JSON.stringify(history));
+    dateEl.textContent = dayjs.unix(data.dt).format('MM/DD/YYYY');
     tempEl.textContent = data.main.temp + " °C";
     iconEl.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     cityEl.textContent = data.name;
