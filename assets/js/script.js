@@ -19,17 +19,22 @@ var APIKey = "ba06f8ea794c64bd0332bf89734b3bc9";
 
 function getCities() {
   const storedCities = JSON.parse(localStorage.getItem('cities')) || []
+  cities.innerHTML = "";
   for (let i = 0; i < storedCities.length; i++) {
     console.log(storedCities[i])
     const getCitiesEl = document.createElement("div");
-    getCitiesEl.textContent = storedCities[i];
+    const getCitiesHeading = document.createElement("h5");
+    getCitiesEl.setAttribute("class","titles")
+    getCitiesHeading.textContent = storedCities[i];
+    getCitiesEl.appendChild(getCitiesHeading);
     cities.appendChild(getCitiesEl);
   }
 }
 getCities();
 
-function buttonClick() {
-  getWeather("Seattle");
+function buttonClick(event) {
+  let cityName = event.srcElement.childNodes[0].data;
+  getWeather(cityName);
 }
 cities.addEventListener("click", buttonClick)
 
@@ -65,8 +70,13 @@ fetch(queryURL)
   })
   .then(function (data) {
     console.log(data);
-    history.push(city);
+    if (history.indexOf(city) ===-1) {
+      history.push(city);
+    }
+
     localStorage.setItem('cities', JSON.stringify(history));
+    getCities();
+
     dateEl.textContent = dayjs.unix(data.dt).format('MM/DD/YYYY');
     tempEl.textContent = data.main.temp + " °C";
     iconEl.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
@@ -94,7 +104,7 @@ function forecast(dataReceived) {
       const cardEl = document.createElement("div");
       cardEl.setAttribute("class", "test")
       const dateEl = document.createElement("li")
-      dateEl.textContent = data.list[i].dt_txt.substr(0, 10);
+      dateEl.textContent = dayjs.unix(data.list[i].dt).format('MM/DD/YYYY');
       cardEl.appendChild(dateEl);
       const iconEl = document.createElement("img")
       iconEl.src = `https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`

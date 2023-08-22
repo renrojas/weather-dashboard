@@ -19,3 +19,15 @@
   .weather {
     text-align: center;
   }
+  .titles {
+    border-style: solid;
+    border-color: blue;
+    border-width: 5px;
+    padding: 0px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  .titles h5 {
+    padding: 1px;
+    margin: 0px;
+  }
