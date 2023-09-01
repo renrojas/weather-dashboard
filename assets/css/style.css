@@ -1,3 +1,7 @@
+  h1 {
+    text-align: center;
+  }
+  
   .test {
     width: 200px;
     height: 200px;
@@ -15,17 +19,18 @@
     background-color: DodgerBlue;
     color: white;
     text-align: center;
+    flex-grow: 5;
   }
   .weather {
     text-align: center;
   }
   .titles {
     border-style: solid;
-    border-color: blue;
-    border-width: 5px;
-    padding: 0px;
+    border-color: rgb(56, 202, 168);
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+    width: 100px;
+    text-align: center;
   }
   .titles h5 {
     padding: 1px;

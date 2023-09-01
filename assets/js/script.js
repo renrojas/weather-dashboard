@@ -23,7 +23,7 @@ function getCities() {
   for (let i = 0; i < storedCities.length; i++) {
     console.log(storedCities[i])
     const getCitiesEl = document.createElement("div");
-    const getCitiesHeading = document.createElement("h5");
+    const getCitiesHeading = document.createElement("h4");
     getCitiesEl.setAttribute("class","titles")
     getCitiesHeading.textContent = storedCities[i];
     getCitiesEl.appendChild(getCitiesHeading);
