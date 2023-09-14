@@ -9,7 +9,7 @@ OpenWeather Map Server-Side API was used to access weather data. This project ta
 ## Installation
 
 Project as a repository on GitHub: https://github.com/renrojas/weather-dashboard
-Project deployed on GitHub Pages: 
+Project deployed on GitHub Pages: https://renrojas.github.io/weather-dashboard/
 
 ## Usage
 
