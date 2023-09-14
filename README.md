@@ -1,24 +1,35 @@
 # Weather-Dashboard
+
 ## Description
 
-The creation of this project was to create 
+The creation of this project was to make an application that can easily access the current weather information, humidity, and wind speed and also for the next 5 days. This application can help anyone with planning a trip or even to just search up the current weather in any city.
+
+OpenWeather Map Server-Side API was used to access weather data. This project taught me how to make API requests using a fetch and adding functionality based on user requests.
 
 ## Installation
 
-Project as a repository on GitHub: 
+Project as a repository on GitHub: https://github.com/renrojas/weather-dashboard
 Project deployed on GitHub Pages: 
 
 ## Usage
 
-To navigate this webpage you can click on 
+To navigate this weather dashboard you can search by a city and click 'Submit'.
+![Home Page](/assets/images/Homepage.png)
 
-![alt text](./)
+Similar results will pop on the webpage:
+![Denver Results](/assets/images/denver-results.png)
 
+If you would like to search for a previously searched city, simply refresh the page and click on the city name below the 'Submit' button:
+![localStorage](/assets/images/localStorage.png)
 
 ## Credits
 
+https://www.w3schools.com/jsref/met_document_getelementbyid.asp - HTML DOM Document getElementById()
 
 
+https://developer.mozilla.org/en-US/docs/Web/API/Request - Fetch Request
+
+https://openweathermap.org/forecast5 - OpenWeather Docs
 
 ## License
 
